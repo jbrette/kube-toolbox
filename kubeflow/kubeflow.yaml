@@ -1,0 +1,1911 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: ambassador-5b87cdf94d-
+    labels:
+      pod-template-hash: "1643789508"
+      service: ambassador
+    name: ambassador-5b87cdf94d-4hcsn
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ambassador-5b87cdf94d
+      uid: f0d81087-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786146"
+    selfLink: /api/v1/namespaces/kubeflow/pods/ambassador-5b87cdf94d-4hcsn
+    uid: f0e24312-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - env:
+      - name: AMBASSADOR_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: AMBASSADOR_SINGLE_NAMESPACE
+        value: "true"
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_alive
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: ambassador
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_ready
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    - image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imagePullPolicy: IfNotPresent
+      name: statsd
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: ambassador
+    serviceAccountName: ambassador
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: ambassador-token-7kmdn
+      secret:
+        defaultMode: 420
+        secretName: ambassador-token-7kmdn
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-24T03:57:14Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://7fb0292c6c6e4b39c57d68b2c5aab5ca079051c1aa1d1d75801baefb62ab2bcd
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imageID: docker-pullable://registry.aliyuncs.com/datawire/ambassador@sha256:590e5d0d236292899795a9285b7d3e51cedbccd04b94db94ac2c56734a86fd5d
+      lastState: {}
+      name: ambassador
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-07-24T03:52:17Z
+    - containerID: docker://0a5c9f1551c75a3ecd81bffe47943444069ec38afc9e78ba2f3d7967125343b8
+      image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imageID: docker-pullable://registry.aliyuncs.com/datawire/statsd@sha256:8d32a808aca996a47874aad774d49228b1f17681b39d40a22f95efdd380a94dc
+      lastState: {}
+      name: statsd
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-07-24T03:57:12Z
+    hostIP: 192.168.122.7
+    phase: Running
+    podIP: 192.168.196.143
+    qosClass: Burstable
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: ambassador-5b87cdf94d-
+    labels:
+      pod-template-hash: "1643789508"
+      service: ambassador
+    name: ambassador-5b87cdf94d-b85l2
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ambassador-5b87cdf94d
+      uid: f0d81087-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786230"
+    selfLink: /api/v1/namespaces/kubeflow/pods/ambassador-5b87cdf94d-b85l2
+    uid: f0e0b7b4-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - env:
+      - name: AMBASSADOR_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: AMBASSADOR_SINGLE_NAMESPACE
+        value: "true"
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_alive
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: ambassador
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_ready
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    - image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imagePullPolicy: IfNotPresent
+      name: statsd
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: ambassador
+    serviceAccountName: ambassador
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: ambassador-token-7kmdn
+      secret:
+        defaultMode: 420
+        secretName: ambassador-token-7kmdn
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-24T03:57:54Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://5f7f0dedda9bfaced7563ffb17dc3b90dc029424e75aa9ef92c81ce88828f827
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imageID: docker-pullable://registry.aliyuncs.com/datawire/ambassador@sha256:590e5d0d236292899795a9285b7d3e51cedbccd04b94db94ac2c56734a86fd5d
+      lastState:
+        terminated:
+          containerID: docker://f6c2e748e054846863841c330c8b468acd3bbf49ff718cbe7a0ed0d80e99d09a
+          exitCode: 1
+          finishedAt: 2018-07-24T03:52:24Z
+          reason: Error
+          startedAt: 2018-07-24T03:51:54Z
+      name: ambassador
+      ready: true
+      restartCount: 1
+      state:
+        running:
+          startedAt: 2018-07-24T03:57:00Z
+    - containerID: docker://9309b8a5269652bae6d7c225995d9fd71abbf2ac30018e4b23b61ab7520e06f8
+      image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imageID: docker-pullable://registry.aliyuncs.com/datawire/statsd@sha256:8d32a808aca996a47874aad774d49228b1f17681b39d40a22f95efdd380a94dc
+      lastState: {}
+      name: statsd
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-07-24T03:56:58Z
+    hostIP: 192.168.122.7
+    phase: Running
+    podIP: 192.168.196.158
+    qosClass: Burstable
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-23T14:35:19Z
+    generateName: ambassador-5b87cdf94d-
+    labels:
+      pod-template-hash: "1643789508"
+      service: ambassador
+    name: ambassador-5b87cdf94d-mv2ms
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ambassador-5b87cdf94d
+      uid: f0d81087-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786235"
+    selfLink: /api/v1/namespaces/kubeflow/pods/ambassador-5b87cdf94d-mv2ms
+    uid: 9f638b0e-8e85-11e8-be0d-0800272e6982
+  spec:
+    containers:
+    - env:
+      - name: AMBASSADOR_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: AMBASSADOR_SINGLE_NAMESPACE
+        value: "true"
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_alive
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: ambassador
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_ready
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    - image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imagePullPolicy: IfNotPresent
+      name: statsd
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: ambassador
+    serviceAccountName: ambassador
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: ambassador-token-7kmdn
+      secret:
+        defaultMode: 420
+        secretName: ambassador-token-7kmdn
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-23T16:10:59Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-24T03:57:54Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-23T16:10:59Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://f2408807e294b48938863381cc01d351999b57411c2e8df4943b632b411356df
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imageID: docker-pullable://registry.aliyuncs.com/datawire/ambassador@sha256:590e5d0d236292899795a9285b7d3e51cedbccd04b94db94ac2c56734a86fd5d
+      lastState: {}
+      name: ambassador
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-07-24T03:52:22Z
+    - containerID: docker://70536b7b2c80b16406d063b078b2c8881c0eb941a4a30e330543bcae9f91c3f8
+      image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imageID: docker-pullable://registry.aliyuncs.com/datawire/statsd@sha256:8d32a808aca996a47874aad774d49228b1f17681b39d40a22f95efdd380a94dc
+      lastState: {}
+      name: statsd
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-07-24T03:57:27Z
+    hostIP: 192.168.122.7
+    phase: Running
+    podIP: 192.168.196.178
+    qosClass: Burstable
+    startTime: 2018-07-23T16:10:59Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: ambassador-5b87cdf94d-
+    labels:
+      pod-template-hash: "1643789508"
+      service: ambassador
+    name: ambassador-5b87cdf94d-st9qp
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ambassador-5b87cdf94d
+      uid: f0d81087-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "759377"
+    selfLink: /api/v1/namespaces/kubeflow/pods/ambassador-5b87cdf94d-st9qp
+    uid: f0e2265b-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - env:
+      - name: AMBASSADOR_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: AMBASSADOR_SINGLE_NAMESPACE
+        value: "true"
+      image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_alive
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: ambassador
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ambassador/v0/check_ready
+          port: 8877
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 100Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    - image: registry.aliyuncs.com/datawire/statsd:0.34.0
+      imagePullPolicy: IfNotPresent
+      name: statsd
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: ambassador-token-7kmdn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: ambassador
+    serviceAccountName: ambassador
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: ambassador-token-7kmdn
+      secret:
+        defaultMode: 420
+        secretName: ambassador-token-7kmdn
+  status:
+    message: 'The node was low on resource: ephemeral-storage. Container ambassador
+      was using 244Ki, which exceeds its request of 0. Container statsd was using
+      56Ki, which exceeds its request of 0. '
+    phase: Failed
+    reason: Evicted
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: centraldashboard-f7d7d7556-
+    labels:
+      app: centraldashboard
+      pod-template-hash: "938383112"
+    name: centraldashboard-f7d7d7556-lhhf7
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: centraldashboard-f7d7d7556
+      uid: f0d26a19-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "785811"
+    selfLink: /api/v1/namespaces/kubeflow/pods/centraldashboard-f7d7d7556-lhhf7
+    uid: f0dfedef-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - image: swiftdiaries/centraldashboard:0.3
+      imagePullPolicy: IfNotPresent
+      name: centraldashboard
+      ports:
+      - containerPort: 8082
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: centraldashboard-token-q7cnq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: centraldashboard
+    serviceAccountName: centraldashboard
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: centraldashboard-token-q7cnq
+      secret:
+        defaultMode: 420
+        secretName: centraldashboard-token-q7cnq
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-24T03:53:36Z
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://f7a186f60c97898dce79d38fd36a863abedf12737350f7fd47a9b525ffff6ecb
+      image: swiftdiaries/centraldashboard:0.3
+      imageID: docker-pullable://swiftdiaries/centraldashboard@sha256:a5fb74ba96b9a098e24bdd4cd6a7d3a6ce3d290623a08bc097baaee6b36c3553
+      lastState: {}
+      name: centraldashboard
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: 2018-07-24T03:53:35Z
+    hostIP: 192.168.122.7
+    phase: Running
+    podIP: 192.168.196.172
+    qosClass: BestEffort
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: tf-hub-
+    labels:
+      app: tf-hub
+      controller-revision-hash: tf-hub-c956756ff
+      statefulset.kubernetes.io/pod-name: tf-hub-0
+    name: tf-hub-0
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: tf-hub
+      uid: f0e18090-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786325"
+    selfLink: /api/v1/namespaces/kubeflow/pods/tf-hub-0
+    uid: f0f0832c-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - command:
+      - jupyterhub
+      - -f
+      - /etc/config/jupyterhub_config.py
+      env:
+      - name: NOTEBOOK_PVC_MOUNT
+        value: "null"
+      - name: CLOUD_NAME
+        value: "null"
+      - name: REGISTRY
+        value: registry.aliyuncs.com
+      - name: REPO_NAME
+        value: kubeflow-images-public
+      image: registry.aliyuncs.com/kubeflow-images-public/jupyterhub-k8s:1.0.2
+      imagePullPolicy: IfNotPresent
+      name: tf-hub
+      ports:
+      - containerPort: 8000
+        protocol: TCP
+      - containerPort: 8081
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: jupyter-hub-token-xcp5n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    hostname: tf-hub-0
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: jupyter-hub
+    serviceAccountName: jupyter-hub
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: jupyterhub-config
+      name: config-volume
+    - name: jupyter-hub-token-xcp5n
+      secret:
+        defaultMode: 420
+        secretName: jupyter-hub-token-xcp5n
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-24T03:58:31Z
+      message: 'containers with unready status: [tf-hub]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      message: 'containers with unready status: [tf-hub]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://298bfe4f94ea2bd628cfe46ce4bfbc770a1f6072ec4cafb5289c7727153367cf
+      image: registry.aliyuncs.com/kubeflow-images-public/jupyterhub-k8s:1.0.2
+      imageID: docker-pullable://registry.aliyuncs.com/kubeflow-images-public/jupyterhub-k8s@sha256:4d813d4d01dc2e87e3018a28b5af2ee1a95f2cd8ff639268d4a66ee4015ac916
+      lastState:
+        terminated:
+          containerID: docker://298bfe4f94ea2bd628cfe46ce4bfbc770a1f6072ec4cafb5289c7727153367cf
+          exitCode: 1
+          finishedAt: 2018-07-24T03:58:30Z
+          reason: Error
+          startedAt: 2018-07-24T03:58:27Z
+      name: tf-hub
+      ready: false
+      restartCount: 4
+      state:
+        waiting:
+          message: Back-off 1m20s restarting failed container=tf-hub pod=tf-hub-0_kubeflow(f0f0832c-8dfd-11e8-bf06-0800272e6982)
+          reason: CrashLoopBackOff
+    hostIP: 192.168.122.7
+    phase: Running
+    podIP: 192.168.196.135
+    qosClass: BestEffort
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: tf-job-dashboard-8698db9f94-
+    labels:
+      name: tf-job-dashboard
+      pod-template-hash: "4254865950"
+    name: tf-job-dashboard-8698db9f94-fz25c
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: tf-job-dashboard-8698db9f94
+      uid: f0f069ed-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786354"
+    selfLink: /api/v1/namespaces/kubeflow/pods/tf-job-dashboard-8698db9f94-fz25c
+    uid: f0f30e17-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - command:
+      - /opt/tensorflow_k8s/dashboard/backend
+      image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+      imagePullPolicy: IfNotPresent
+      name: tf-job-dashboard
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: tf-job-dashboard-token-xbfsq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tf-job-dashboard
+    serviceAccountName: tf-job-dashboard
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: tf-job-dashboard-token-xbfsq
+      secret:
+        defaultMode: 420
+        secretName: tf-job-dashboard-token-xbfsq
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      message: 'containers with unready status: [tf-job-dashboard]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      message: 'containers with unready status: [tf-job-dashboard]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+      imageID: ""
+      lastState: {}
+      name: tf-job-dashboard
+      ready: false
+      restartCount: 0
+      state:
+        waiting:
+          message: Back-off pulling image "registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020"
+          reason: ImagePullBackOff
+    hostIP: 192.168.122.7
+    phase: Pending
+    podIP: 192.168.196.142
+    qosClass: BestEffort
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generateName: tf-job-operator-55cc54745b-
+    labels:
+      name: tf-job-operator
+      pod-template-hash: "1177103016"
+    name: tf-job-operator-55cc54745b-zznkf
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: tf-job-operator-55cc54745b
+      uid: f0dbfa75-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786302"
+    selfLink: /api/v1/namespaces/kubeflow/pods/tf-job-operator-55cc54745b-zznkf
+    uid: f0dfd616-8dfd-11e8-bf06-0800272e6982
+  spec:
+    containers:
+    - command:
+      - /opt/mlkube/tf-operator
+      - --controller-config-file=/etc/config/controller_config_file.yaml
+      - --alsologtostderr
+      - -v=1
+      env:
+      - name: MY_POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: MY_POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+      imagePullPolicy: IfNotPresent
+      name: tf-job-operator
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: tf-job-operator-token-q2jhp
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: airship
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: tf-job-operator
+    serviceAccountName: tf-job-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: tf-job-operator-config
+      name: config-volume
+    - name: tf-job-operator-token-q2jhp
+      secret:
+        defaultMode: 420
+        secretName: tf-job-operator-token-q2jhp
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      message: 'containers with unready status: [tf-job-operator]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: null
+      message: 'containers with unready status: [tf-job-operator]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: 2018-07-22T22:24:04Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+      imageID: ""
+      lastState: {}
+      name: tf-job-operator
+      ready: false
+      restartCount: 0
+      state:
+        waiting:
+          message: Back-off pulling image "registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020"
+          reason: ImagePullBackOff
+    hostIP: 192.168.122.7
+    phase: Pending
+    podIP: 192.168.196.159
+    qosClass: BestEffort
+    startTime: 2018-07-22T22:24:04Z
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3SOvUoHQQzEex9j6vOrky2tLQTBRixye1GW29ssSfyLHPvuEj0b0S6ZzPwyO6iXR1Yr0pBwusaEtbQFCQ+sp5IZEzZ2WsgJaUelmavFtJq0xn5R5DLL1qVxcySsbzO/VHk/z6IRtgOTQNtMZrSIYkxotP0SvzXr9OX+4YTXOud42UXdkJ72P9NxRbq5muCkr+z3xz6eo0Xl7KJB+a+Rf/QQ74SWW6rUMivGOPsEAAD//wEAAP//SKTEhiMBAAA="}'
+    creationTimestamp: 2018-07-22T22:24:02Z
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+      service: ambassador
+    name: ambassador
+    namespace: kubeflow
+    resourceVersion: "686885"
+    selfLink: /api/v1/namespaces/kubeflow/services/ambassador
+    uid: ef99d2bf-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: 10.110.16.107
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: ambassador
+      nodePort: 31596
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      service: ambassador
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3yOvU4DMRCEex5j6guIKpFbKrpISDSIYs+3IOtsr+XdBKGT3x0tf1WUbjWz881soJaeuWuSioDzPSasqS4IeOJ+TpExobDRQkYIGzLNnNWvVaVWttskd1FKk8rVELCeZn7L8rGL0j2sv5gAKjOp0iJ9R0tJFWNCpXLR+nG00Xfyj+kJbRy9vkk3RXjZrjD8B+Fw2O8nGPV3tuO/Ml59W+Zo0p13aaf32Wdz8SGf1Lg/HjHGzRcAAAD//wEAAP//c5ZmsDYBAAA="}'
+    creationTimestamp: 2018-07-22T22:24:02Z
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+      service: ambassador-admin
+    name: ambassador-admin
+    namespace: kubeflow
+    resourceVersion: "686888"
+    selfLink: /api/v1/namespaces/kubeflow/services/ambassador-admin
+    uid: efd6f787-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: 10.100.229.210
+    ports:
+    - name: ambassador-admin
+      port: 8877
+      protocol: TCP
+      targetPort: 8877
+    selector:
+      service: ambassador
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      getambassador.io/config: |-
+        ---
+        apiVersion: ambassador/v0
+        kind:  Mapping
+        name: centralui-mapping
+        prefix: /
+        rewrite: /
+        service: centraldashboard.kubeflow
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3yRMU/zQAyG9+9XRJ6Tth9TdRtiYgBVQmIhDM7FCacm9unstlRV/ju6hlKEEJst+338JHcCjOGZkgZhcLD/DyVsA7fg4InSPniCEkYybNEQ3AmQWQwtCGtuezIcG1TFVtIiyNILd6EHB1VV1XyFu+K6t9yvas5XXFE8YIyB+5oZR3KFJ7aEwy5U42UQE3Xh3RXLmhMdUjA61zrrfUVa1LdGMLWL7a6hbpADTCUM2NBwNsUYwcHP5fy5Ksxks/wYhYkNHFwolZdEGZUFfyfkiUb09C2WExrJ59NRkim4l7kCt16VYJh6ss1nv76ZXktQGsibpD90M5U0/9Dbrgsc7AgOHoXzM9kxZoO7YadG6X4D0/TvAwAA//8BAAD//5pXVHLgAQAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    labels:
+      app: centraldashboard
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: centraldashboard
+    namespace: kubeflow
+    resourceVersion: "686902"
+    selfLink: /api/v1/namespaces/kubeflow/services/centraldashboard
+    uid: f0c8bf17-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: 10.98.17.98
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8082
+    selector:
+      app: centraldashboard
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      getambassador.io/config: |-
+        ---
+        apiVersion: ambassador/v0
+        kind:  Mapping
+        name: k8s-dashboard-ui-mapping
+        prefix: /k8s/ui/
+        rewrite: /
+        tls: true
+        service: kubernetes-dashboard.kube-system
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/1yPMW/jMAyF9/sVAmcrvkM8GFpv6lAgQIEudQfaZlzBNiWIdNIg8H8vFLdI0E16fPz43hUw+ldK4gODg9M/KGD03IODF0on3xEUMJNij4rgroDMQVF9YMnfgRTnFkWwD2nnQ9kFPvoBHFhrG77Dnbn7ytPfhvMVZ8wzxuh5aJhxJmfGWmyP8tEGTL1dvJ1/5jHR0X86U461lIsvG050Tl7JmbJhncQZTQs1LFtuZ8alpcSk9IDcZdHKRZRmWAuYsKXp1mSUwEy6dZhjYGIFB9l/nMLZdiFR3sg5s/4YFDZZInb0sJPtEqnL+BiSCri37QWuqvYFKKaB9HAT6qrar+8FCE3UaUi3TLVYjPEb+btLxusl5ov/p0WU0tMB1vXPFwAAAP//AQAA//8Cr9Mc1AEAAA=="}'
+    creationTimestamp: 2018-07-22T22:24:01Z
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: k8s-dashboard
+    namespace: kubeflow
+    resourceVersion: "686876"
+    selfLink: /api/v1/namespaces/kubeflow/services/k8s-dashboard
+    uid: ef5efe09-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: 10.96.176.150
+    ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      k8s-app: kubernetes-dashboard
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/2SOwUoEMRBE735GnWc03iR/4EUEwYt46Mn2YthMd0j3rIch/y5hUIS9NUW9rreDan7nZlkFEddHTLhkOSHijds1J8aElZ1O5IS4o9DCxcZFtSLCz/PXtgzKVIT9PutD0rWqsDgiLtvC56Lfc9LG6BOEVv7j5oAjsUqJ/9VH0yqnMZTKZs7t+RURLyrDqGpzQ/zYf98dDiNGfAoh9M8JxoWTa7uR7b3f/QAAAP//AQAA//8T9OOt+QAAAA=="}'
+    creationTimestamp: 2018-07-22T22:24:00Z
+    labels:
+      app: tf-hub
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: tf-hub-0
+    namespace: kubeflow
+    resourceVersion: "686844"
+    selfLink: /api/v1/namespaces/kubeflow/services/tf-hub-0
+    uid: ee69ffcc-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: None
+    ports:
+    - name: hub
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app: tf-hub
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/1yOMUsEQQyFe3/Gq2d17WRKawtBsBGL7GzOG252EmayJ7Lsf5eAwrFd8njfl2wgze/cepaKiOsjAi65zoh443bNiRGwsNFMRogbCk1cuk+kigg7Ded1GsrkYJda2e6zPCRZVCpXQ8RlnfhU5HtI0hh7QKWFD6hHXSnxTd+rXTn5MZVmHfFj+4fPq2MeIz6NAUbti+31bx/H/TOgc+Fk0o7futh+1DUvQvMzFaqJG/b97hcAAP//AQAA//80i6P5EAEAAA=="}'
+    creationTimestamp: 2018-07-22T22:24:00Z
+    labels:
+      app: tf-hub-lb
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: tf-hub-lb
+    namespace: kubeflow
+    resourceVersion: "686848"
+    selfLink: /api/v1/namespaces/kubeflow/services/tf-hub-lb
+    uid: ee73cd44-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: 10.102.219.89
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: hub
+      nodePort: 32217
+      port: 80
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app: tf-hub
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      getambassador.io/config: |-
+        ---
+        apiVersion: ambassador/v0
+        kind:  Mapping
+        name: tfjobs-ui-mapping
+        prefix: /tfjobs/
+        rewrite: /tfjobs/
+        service: tf-job-dashboard.kubeflow
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3SOvU7DMBDHd54iujluylZ5ZAYJCYmFMFzsS3Cb3Fn2NQVVeXdkQtUKic3n/9fvDBjDK6UchMHCfA81HAJ7sPBCaQ6OoIaJFD0qgj0DMouiBuFczoEUpw5zRi9pE6Rxwn0YwIIxpuVrua2uvmbetlxWbFU9YYyBh5YZJ7KV9nvpsjkGM12EmKgPn7ZqVq1pOdEpBaXbr7zClgKzl854zB+dYPKbw7GjfpQTLDWM2NH4w33Iwky6Ek9RmFjBwsVsnCQqiUIFFv62wqrkiI5uYiWRI7myECVpBvu2vsDutjUopoH0+ffebZf3GjKN5FRSyfy3ttSgX7FIj4L+AUdkRwmW5e4bAAD//wEAAP//2Ex6WMABAAA="}'
+    creationTimestamp: 2018-07-22T22:24:01Z
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: tf-job-dashboard
+    namespace: kubeflow
+    resourceVersion: "686869"
+    selfLink: /api/v1/namespaces/kubeflow/services/tf-job-dashboard
+    uid: eeff539a-8dfd-11e8-bf06-0800272e6982
+  spec:
+    clusterIP: 10.102.169.93
+    externalTrafficPolicy: Cluster
+    ports:
+    - nodePort: 31529
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      name: tf-job-dashboard
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/6RSTW/TQBC98zPmvNgOrdRqb4aWComGqJG4IFRN1pNmlf1id+xgRfvf0TqliWgRCE4ejd+b93be7AGD/kwxae9AAn1ncqVO9TBbEeMMBGy160DCFQXjR0uOQYAlxg4ZQe7B4IpMKtU2eeeIK+1r5W3wroAlbPsVrY3fvVY+EmQBDi2BBLQrTAk7H+HQSwEVnRAKNgVSZXakYLTCBPJMAJMNBpnKj5etJIqDVr+o5D/LKO8YtaOYQH7ZA7lh+j46bm/ftstle/Xp7n7e3l4vF+27axAwoOnpffS2TFhrMt0drZ/qBfIG5JPP6mgh5yxemr38ML/5eP1cAiRw7AnyVwHa4kNpRHrQieNYodFj71SqlLd1EdrpSPXx9bKpzs6rBgQYPZCjlBbRr6YVbpjDDXEpw8HsCa8emlptSG3vsRBBQPCRQV5eXlxkAdpp1miuyOC4JOVdVyJqBASK2ncnrd8EHwk7/S92CnH8LzuRku+joulijLaap0qFHuSsHLn1cQQJ501zq2EifOspnaDgTdNYOIHODtAp2L+MKDFy6o7xPC7p0J6yjpQYIy+80aqItGaHYwLx88pbpXzveP5suznn/OoHAAAA//8BAAD//xKPNZDkAwAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: ambassador
+    namespace: kubeflow
+    resourceVersion: "786239"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/deployments/ambassador
+    uid: f0d5344e-8dfd-11e8-bf06-0800272e6982
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        service: ambassador
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          service: ambassador
+        namespace: kubeflow
+      spec:
+        containers:
+        - env:
+          - name: AMBASSADOR_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: AMBASSADOR_SINGLE_NAMESPACE
+            value: "true"
+          image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ambassador/v0/check_alive
+              port: 8877
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: ambassador
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ambassador/v0/check_ready
+              port: 8877
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 400Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - image: registry.aliyuncs.com/datawire/statsd:0.34.0
+          imagePullPolicy: IfNotPresent
+          name: statsd
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: ambassador
+        serviceAccountName: ambassador
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 3
+    conditions:
+    - lastTransitionTime: 2018-07-22T22:59:44Z
+      lastUpdateTime: 2018-07-22T23:00:38Z
+      message: ReplicaSet "ambassador-5b87cdf94d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: 2018-07-24T03:57:54Z
+      lastUpdateTime: 2018-07-24T03:57:54Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 3
+    replicas: 3
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/5TOQUsDMRAF4Ls/Y85rt9VLyU3wLJ68SA+z2VcNTWZCMm2VJf9dgiBFVPD2YJjvvYU4hyeUGlTIEd4M0nMdT5sJxhsa6BBkJkf3yFHfE8RooATjmY3JLRR5Qqw9cc7kyEOscJy5vk7KZe5EVRHYKujoNWWVrjg6HCfso56vvRZQG0g44WehX2pmj4u3/lEzfK82pBzZ0PO/xrULxKsYB0Gp5J4XColfel89h73NgUtAHb8Dbr26pb+WZy326X3xj1qM3Ha9vWm7thuoopyCx533ehR7+IVqrbWrDwAAAP//AQAA//8dcmUfsQEAAA=="}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      app: centraldashboard
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: centraldashboard
+    namespace: kubeflow
+    resourceVersion: "785814"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/deployments/centraldashboard
+    uid: f0cf17d7-8dfd-11e8-bf06-0800272e6982
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: centraldashboard
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: centraldashboard
+      spec:
+        containers:
+        - image: swiftdiaries/centraldashboard:0.3
+          imagePullPolicy: IfNotPresent
+          name: centraldashboard
+          ports:
+          - containerPort: 8082
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: centraldashboard
+        serviceAccountName: centraldashboard
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: 2018-07-22T22:24:04Z
+      lastUpdateTime: 2018-07-22T22:24:04Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2018-07-22T22:48:58Z
+      lastUpdateTime: 2018-07-22T22:48:58Z
+      message: ReplicaSet "centraldashboard-f7d7d7556" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3xQPWvzMBDe359xsx3ZgbcYbYXOpVOXEMJJvqSqJZ2QzmlD8H8v6kfI0HR7hO75PAMm90y5OI6ggd6FYsVFHXtDgj00MLk4goYHSp5PgaJAA4EERxQEfQaPhnypaCocI8nKsbIcEsd6rGGaDe09v7WWM8HSQMRAoEH27SubdsTyYhjzCF8/JaGlK1pllES2OgiF5FGo4t8z3NJerlQsR0EXKRfQm/oMAWvHDShOouoGnKv1bhqKumgog3aiOMK2ARfwUH0yHVyRfFqhd6c52rKyHNSl8edZadNsvLNK9jtOlFE46+O664furv/fmjXabt3BX7skzvIT9jv7E2cBPXRDt2yXbQOF8tFZureW5yiPN2dYln8fAAAA//8BAAD//2B/DQv2AQAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: tf-job-dashboard
+    namespace: kubeflow
+    resourceVersion: "687700"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/deployments/tf-job-dashboard
+    uid: f0eebeb8-8dfd-11e8-bf06-0800272e6982
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: tf-job-dashboard
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: tf-job-dashboard
+      spec:
+        containers:
+        - command:
+          - /opt/tensorflow_k8s/dashboard/backend
+          image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+          imagePullPolicy: IfNotPresent
+          name: tf-job-dashboard
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: tf-job-dashboard
+        serviceAccountName: tf-job-dashboard
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: 2018-07-22T22:24:04Z
+      lastUpdateTime: 2018-07-22T22:24:04Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2018-07-22T22:34:05Z
+      lastUpdateTime: 2018-07-22T22:34:05Z
+      message: ReplicaSet "tf-job-dashboard-8698db9f94" has timed out progressing.
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/5xSwYrbMBC99zPmbEfxQksx7CF0t7dsQwuFsgQzVsapGkkjpLHbsPjfi+JsYujuHnp7kua9eZp5T4DBfKeYDHuogf4I+YyTGqqWBCso4GD8Dmq4o2D56MgLFOBIcIeCUD+BxZZsyuiQ2HuShWGl2QX2ubiGQ99SZ/l3qTkSjAV4dAQ1SFf+4rbkQBGFI0wPKaCmGSsTUiCdG0QK1mhMUFcFCLlgUSg/vOznlT7jTFGzFzSeYoL6MR+dw/zdR1AcRDmbbSjp5i7LMrMiW0sxw87sy85YulUkWk0X6lrSTDdNLlkc0dmTBNrElvfCSXYUT7LDbQXbAsgPJy9n9+sfzebLXfOwWt9/26w+3UMBA9qePkd2+QedIbv7St0Fb1B+Qn0ZyeI61HEci5d0/0syq20LMA73WS7S3iSJxwVac+y9TgvNTl1WfypLZehba7SSrnmeZz3cLKuPyw/V+7K9Qb28WcIbARnY9o7W3HuZFuYyPNubjf+qcd7PRIRxmz0nioPRtNI6sx/ebvYcjCyzxvB6rs5RmAX8n97jOL77CwAA//8BAAD//1BQvrlzAwAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: tf-job-operator
+    namespace: kubeflow
+    resourceVersion: "687701"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/deployments/tf-job-operator
+    uid: f0dafb2b-8dfd-11e8-bf06-0800272e6982
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: tf-job-operator
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: tf-job-operator
+      spec:
+        containers:
+        - command:
+          - /opt/mlkube/tf-operator
+          - --controller-config-file=/etc/config/controller_config_file.yaml
+          - --alsologtostderr
+          - -v=1
+          env:
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+          imagePullPolicy: IfNotPresent
+          name: tf-job-operator
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: tf-job-operator
+        serviceAccountName: tf-job-operator
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: tf-job-operator-config
+          name: config-volume
+  status:
+    conditions:
+    - lastTransitionTime: 2018-07-22T22:24:04Z
+      lastUpdateTime: 2018-07-22T22:24:04Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2018-07-22T22:34:05Z
+      lastUpdateTime: 2018-07-22T22:34:05Z
+      message: ReplicaSet "tf-job-operator-55cc54745b" has timed out progressing.
+      reason: ProgressDeadlineExceeded
+      status: "False"
+      type: Progressing
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "3"
+      deployment.kubernetes.io/max-replicas: "4"
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/6RSTW/TQBC98zPmvNgOrdRqb4aWComGqJG4IFRN1pNmlf1id+xgRfvf0TqliWgRCE4ejd+b93be7AGD/kwxae9AAn1ncqVO9TBbEeMMBGy160DCFQXjR0uOQYAlxg4ZQe7B4IpMKtU2eeeIK+1r5W3wroAlbPsVrY3fvVY+EmQBDi2BBLQrTAk7H+HQSwEVnRAKNgVSZXakYLTCBPJMAJMNBpnKj5etJIqDVr+o5D/LKO8YtaOYQH7ZA7lh+j46bm/ftstle/Xp7n7e3l4vF+27axAwoOnpffS2TFhrMt0drZ/qBfIG5JPP6mgh5yxemr38ML/5eP1cAiRw7AnyVwHa4kNpRHrQieNYodFj71SqlLd1EdrpSPXx9bKpzs6rBgQYPZCjlBbRr6YVbpjDDXEpw8HsCa8emlptSG3vsRBBQPCRQV5eXlxkAdpp1miuyOC4JOVdVyJqBASK2ncnrd8EHwk7/S92CnH8LzuRku+joulijLaap0qFHuSsHLn1cQQJ501zq2EifOspnaDgTdNYOIHODtAp2L+MKDFy6o7xPC7p0J6yjpQYIy+80aqItGaHYwLx88pbpXzveP5suznn/OoHAAAA//8BAAD//xKPNZDkAwAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      pod-template-hash: "1643789508"
+      service: ambassador
+    name: ambassador-5b87cdf94d
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ambassador
+      uid: f0d5344e-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "786236"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/replicasets/ambassador-5b87cdf94d
+    uid: f0d81087-8dfd-11e8-bf06-0800272e6982
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        pod-template-hash: "1643789508"
+        service: ambassador
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: "1643789508"
+          service: ambassador
+        namespace: kubeflow
+      spec:
+        containers:
+        - env:
+          - name: AMBASSADOR_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: AMBASSADOR_SINGLE_NAMESPACE
+            value: "true"
+          image: registry.aliyuncs.com/datawire/ambassador:0.34.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ambassador/v0/check_alive
+              port: 8877
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: ambassador
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ambassador/v0/check_ready
+              port: 8877
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "1"
+              memory: 400Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - image: registry.aliyuncs.com/datawire/statsd:0.34.0
+          imagePullPolicy: IfNotPresent
+          name: statsd
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: ambassador
+        serviceAccountName: ambassador
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 3
+    fullyLabeledReplicas: 3
+    observedGeneration: 1
+    readyReplicas: 3
+    replicas: 3
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/5TOQUsDMRAF4Ls/Y85rt9VLyU3wLJ68SA+z2VcNTWZCMm2VJf9dgiBFVPD2YJjvvYU4hyeUGlTIEd4M0nMdT5sJxhsa6BBkJkf3yFHfE8RooATjmY3JLRR5Qqw9cc7kyEOscJy5vk7KZe5EVRHYKujoNWWVrjg6HCfso56vvRZQG0g44WehX2pmj4u3/lEzfK82pBzZ0PO/xrULxKsYB0Gp5J4XColfel89h73NgUtAHb8Dbr26pb+WZy326X3xj1qM3Ha9vWm7thuoopyCx533ehR7+IVqrbWrDwAAAP//AQAA//8dcmUfsQEAAA=="}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      app: centraldashboard
+      pod-template-hash: "938383112"
+    name: centraldashboard-f7d7d7556
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: centraldashboard
+      uid: f0cf17d7-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "785813"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/replicasets/centraldashboard-f7d7d7556
+    uid: f0d26a19-8dfd-11e8-bf06-0800272e6982
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: centraldashboard
+        pod-template-hash: "938383112"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: centraldashboard
+          pod-template-hash: "938383112"
+      spec:
+        containers:
+        - image: swiftdiaries/centraldashboard:0.3
+          imagePullPolicy: IfNotPresent
+          name: centraldashboard
+          ports:
+          - containerPort: 8082
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: centraldashboard
+        serviceAccountName: centraldashboard
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3xQPWvzMBDe359xsx3ZgbcYbYXOpVOXEMJJvqSqJZ2QzmlD8H8v6kfI0HR7hO75PAMm90y5OI6ggd6FYsVFHXtDgj00MLk4goYHSp5PgaJAA4EERxQEfQaPhnypaCocI8nKsbIcEsd6rGGaDe09v7WWM8HSQMRAoEH27SubdsTyYhjzCF8/JaGlK1pllES2OgiF5FGo4t8z3NJerlQsR0EXKRfQm/oMAWvHDShOouoGnKv1bhqKumgog3aiOMK2ARfwUH0yHVyRfFqhd6c52rKyHNSl8edZadNsvLNK9jtOlFE46+O664furv/fmjXabt3BX7skzvIT9jv7E2cBPXRDt2yXbQOF8tFZureW5yiPN2dYln8fAAAA//8BAAD//2B/DQv2AQAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      name: tf-job-dashboard
+      pod-template-hash: "4254865950"
+    name: tf-job-dashboard-8698db9f94
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: tf-job-dashboard
+      uid: f0eebeb8-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "686960"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/replicasets/tf-job-dashboard-8698db9f94
+    uid: f0f069ed-8dfd-11e8-bf06-0800272e6982
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: tf-job-dashboard
+        pod-template-hash: "4254865950"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: tf-job-dashboard
+          pod-template-hash: "4254865950"
+      spec:
+        containers:
+        - command:
+          - /opt/tensorflow_k8s/dashboard/backend
+          image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+          imagePullPolicy: IfNotPresent
+          name: tf-job-dashboard
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: tf-job-dashboard
+        serviceAccountName: tf-job-dashboard
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/5xSwYrbMBC99zPmbEfxQksx7CF0t7dsQwuFsgQzVsapGkkjpLHbsPjfi+JsYujuHnp7kua9eZp5T4DBfKeYDHuogf4I+YyTGqqWBCso4GD8Dmq4o2D56MgLFOBIcIeCUD+BxZZsyuiQ2HuShWGl2QX2ubiGQ99SZ/l3qTkSjAV4dAQ1SFf+4rbkQBGFI0wPKaCmGSsTUiCdG0QK1mhMUFcFCLlgUSg/vOznlT7jTFGzFzSeYoL6MR+dw/zdR1AcRDmbbSjp5i7LMrMiW0sxw87sy85YulUkWk0X6lrSTDdNLlkc0dmTBNrElvfCSXYUT7LDbQXbAsgPJy9n9+sfzebLXfOwWt9/26w+3UMBA9qePkd2+QedIbv7St0Fb1B+Qn0ZyeI61HEci5d0/0syq20LMA73WS7S3iSJxwVac+y9TgvNTl1WfypLZehba7SSrnmeZz3cLKuPyw/V+7K9Qb28WcIbARnY9o7W3HuZFuYyPNubjf+qcd7PRIRxmz0nioPRtNI6sx/ebvYcjCyzxvB6rs5RmAX8n97jOL77CwAA//8BAAD//1BQvrlzAwAA"}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      name: tf-job-operator
+      pod-template-hash: "1177103016"
+    name: tf-job-operator-55cc54745b
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: tf-job-operator
+      uid: f0dafb2b-8dfd-11e8-bf06-0800272e6982
+    resourceVersion: "686933"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/replicasets/tf-job-operator-55cc54745b
+    uid: f0dbfa75-8dfd-11e8-bf06-0800272e6982
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: tf-job-operator
+        pod-template-hash: "1177103016"
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: tf-job-operator
+          pod-template-hash: "1177103016"
+      spec:
+        containers:
+        - command:
+          - /opt/mlkube/tf-operator
+          - --controller-config-file=/etc/config/controller_config_file.yaml
+          - --alsologtostderr
+          - -v=1
+          env:
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          image: registry.aliyuncs.com/kubeflow-images-public/tf_operator:v20180615-b2ac020
+          imagePullPolicy: IfNotPresent
+          name: tf-job-operator
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: tf-job-operator
+        serviceAccountName: tf-job-operator
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: tf-job-operator-config
+          name: config-volume
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      ksonnet.io/managed: '{"pristine":"H4sIAAAAAAAA/3xSzW7bPBC8f4+xZ0qyv1OgW5oGRdHaMmI7QBEYxppeKawpkiCXLoRA717QUm2nSXojd2dmZ39eAJ16JB+UNVACOheK43RHjFMQcFBmDyUsGZnqqJfEIKAlxj0yQvkCGnekQ3odgjWGOFe2kLZ11pBhKOEQd1Rr+yuT1hP0Agy2BCVwnT3HHQz/4FDSFTjhgiOZdD05rSQGKKcCAvmjkjQfNEAAU+s0MiXk+77QuUu5/kpYWsOoDPkA5VP6ti2mbp/gZ3Qdkx/8ZTUIKIhlIa2pVVNcstshkrsONgLIHE9CY4PzanX/qaq+bRePd9tZtZ6vQMARdUxJE7WGXpzBd9+r9eft/HZ2/w/Qw/2Xr8vVw48riKdGBfZdjlp10ciQS9u+5iyqv3XPK1EtNhQyF3daSeg3Ak6Rj3SL94lXA8kON6Gc5pP8f3i7aGc9/xn1OPmF9QzlzWQySZbfhG+mydPR6tjSzEYz0tv0XCA/Q3m9mEvJ4Z8NROg3SWW8nFspE3s8oNH5aHDAny3WqpmhS5diXqFTn2PF/uOSvYDo9si0ZI9MTZeEuHOnpVitlWnWpzz0ff/fbwAAAP//AQAA//9khlkThgMAAA=="}'
+    creationTimestamp: 2018-07-22T22:24:04Z
+    generation: 1
+    labels:
+      app.kubernetes.io/deploy-manager: ksonnet
+      ksonnet.io/component: kubeflow-core
+    name: tf-hub
+    namespace: kubeflow
+    resourceVersion: "786299"
+    selfLink: /apis/apps/v1/namespaces/kubeflow/statefulsets/tf-hub
+    uid: f0e18090-8dfd-11e8-bf06-0800272e6982
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: tf-hub
+    serviceName: ""
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: tf-hub
+      spec:
+        containers:
+        - command:
+          - jupyterhub
+          - -f
+          - /etc/config/jupyterhub_config.py
+          env:
+          - name: NOTEBOOK_PVC_MOUNT
+            value: "null"
+          - name: CLOUD_NAME
+            value: "null"
+          - name: REGISTRY
+            value: registry.aliyuncs.com
+          - name: REPO_NAME
+            value: kubeflow-images-public
+          image: registry.aliyuncs.com/kubeflow-images-public/jupyterhub-k8s:1.0.2
+          imagePullPolicy: IfNotPresent
+          name: tf-hub
+          ports:
+          - containerPort: 8000
+            protocol: TCP
+          - containerPort: 8081
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: jupyter-hub
+        serviceAccountName: jupyter-hub
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: jupyterhub-config
+          name: config-volume
+    updateStrategy:
+      type: RollingUpdate
+  status:
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: tf-hub-c956756ff
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: tf-hub-c956756ff
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

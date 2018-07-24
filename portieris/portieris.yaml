@@ -1,0 +1,597 @@
+REVISION: 1
+RELEASED: Mon Jul 23 23:32:35 2018
+CHART: portieris-0.2.0
+USER-SUPPLIED VALUES:
+IBMContainerService: false
+
+COMPUTED VALUES:
+IBMContainerService: false
+affinity: {}
+hyperkube:
+  repository: quay.io/coreos/hyperkube
+  tag: v1.7.6_coreos.0
+image:
+  host: docker.io/ibmcom
+  image: portieris
+  pullPolicy: Always
+  tag: 0.2.0
+nodeSelector: {}
+replicaCount: 3
+resources: {}
+service:
+  port: 443
+  targetPort: 8000
+  type: ClusterIP
+tolerations: []
+
+HOOKS:
+---
+# create-default-image-policies
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-default-image-policies
+  namespace: ibm-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-weight: "-3"
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  template:
+    metadata:
+      name: create-crds
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: hyperkube
+          image: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          command:
+            - /kubectl
+            - apply
+            - -f
+            - /tmp/portieris/default-custom-resources.yaml
+          volumeMounts:
+            - mountPath: "/tmp/portieris"
+              name: tmp-configmap-portieris
+      volumes:
+        - name: tmp-configmap-portieris
+          configMap:
+            name: default-image-policies
+      restartPolicy: OnFailure
+---
+# create-crds
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-crds
+  namespace: ibm-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "-6"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  template:
+    metadata:
+      name: create-crds
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: hyperkube
+          image: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          command:
+            - /kubectl
+            - apply
+            - -f
+            - /tmp/portieris/custom-resource-definitions.yaml
+          volumeMounts:
+            - mountPath: "/tmp/portieris"
+              name: tmp-configmap-portieris
+      volumes:
+        - name: tmp-configmap-portieris
+          configMap:
+            name: image-policy-crds
+      restartPolicy: OnFailure
+---
+# delete-crds
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-crds
+  namespace: ibm-system
+  annotations:
+    helm.sh/hook: pre-delete
+    helm.sh/hook-weight: "-9"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  template:
+    metadata:
+      name: delete-crds
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: hyperkube
+          image: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          command:
+            - /kubectl
+            - delete
+            - -f
+            - /tmp/portieris/custom-resource-definitions.yaml
+            - --ignore-not-found=true
+          volumeMounts:
+            - mountPath: "/tmp/portieris"
+              name: tmp-configmap-portieris
+      volumes:
+        - name: tmp-configmap-portieris
+          configMap:
+            name: image-policy-crds
+      restartPolicy: OnFailure
+---
+# create-admission-webhooks
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-admission-webhooks
+  namespace: ibm-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "5"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  template:
+    metadata:
+      name: create-admission-webhooks
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: hyperkube
+          image: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          command:
+            # TODO: Add a wait until portieris is healthy
+            - /kubectl
+            - apply
+            - -f
+            - /tmp/portieris/webhooks.yaml
+          volumeMounts:
+            - mountPath: "/tmp/portieris"
+              name: tmp-configmap-portieris
+      volumes:
+        - name: tmp-configmap-portieris
+          configMap:
+            name: admission-webhooks
+      restartPolicy: OnFailure
+---
+# delete-admission-webhooks
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-admission-webhooks
+  namespace: ibm-system
+  annotations:
+    helm.sh/hook: pre-delete
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  template:
+    metadata:
+      name: delete-admission-webhooks
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: hyperkube
+          image: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          command:
+            - /kubectl
+            - delete
+            - -f
+            - /tmp/portieris/webhooks.yaml
+            - --ignore-not-found=true
+          volumeMounts:
+            - mountPath: "/tmp/portieris"
+              name: tmp-configmap-portieris
+      volumes:
+        - name: tmp-configmap-portieris
+          configMap:
+            name: admission-webhooks
+      restartPolicy: OnFailure
+---
+# validate-crd-creation
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: validate-crd-creation
+  namespace: ibm-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  template:
+    metadata:
+      name: validate-crd-creation
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: hyperkube
+          image: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          command:
+            - /kubectl
+            - get
+            - customresourcedefinitions
+            - imagepolicies.securityenforcement.admission.cloud.ibm.com
+            - clusterimagepolicies.securityenforcement.admission.cloud.ibm.com
+      restartPolicy: OnFailure
+MANIFEST:
+
+---
+# Source: portieris/templates/admission-webhooks/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admission-webhooks
+  namespace: ibm-system
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+data:
+  webhooks.yaml: |-
+    apiVersion: admissionregistration.k8s.io/v1beta1
+    kind: MutatingWebhookConfiguration
+    metadata:
+      name: image-admission-config
+      namespace: ibm-system
+      labels:
+        app: portieris
+        chart: portieris-0.2.0
+        release: portieris
+        heritage: Tiller
+    webhooks:
+      - name: trust.hooks.securityenforcement.admission.cloud.ibm.com
+        clientConfig:
+          service:
+            name: portieris
+            namespace: ibm-system
+            path: "/admit"
+          caBundle: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNyRENDQVpRQ0NRQzFBU2FwMWl0NTBEQU5CZ2txaGtpRzl3MEJBUXNGQURBWE1SVXdFd1lEVlFRRERBeHcKYjNKMGFXVnlhWE5mWTJFd0lCY05NVGd3TkRJeU1UTXlOak01V2hnUE1qSTVNakF5TURVeE16STJNemxhTUJjeApGVEFUQmdOVkJBTU1ESEJ2Y25ScFpYSnBjMTlqWVRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDCkFRb0NnZ0VCQU9JNitUVlYxZHlKNVlqbk9VZjNlKzlRd0wyMWEvSHlyNCtZdTBuZUhKMFViaGNHa3VLa0NudXQKUTBVNWVic2YvY1VNT2ZYVzVsMXlReTgyM3Fad0M5czdZWlZzdjd5R0dKSnVXTEhiRW82R2x0eDR3Mm9uMkdtbgpJVDJrTEZNaHRLTGh4anM4RjBzU1V3Zm5nQ3FLVFRZZ1l4OTNOVGM2WlFYZlNpenBpNDNqSTdLQWtkZWlDUEJwCkhzMVJ2ei9mVys1TUw4OTMwajRqL1RqVWNnTnk2cHlsbEdtYVdPemcxbkYrcjYyVDZuRzZNSkxMWlRLNWFhOC8KOUVBWlhRczdYOUJURmlLeSt4TjBCVlk5TWZKNDJNY3A3NndzT21mR29TUm9JbGxBRWtNaGRwRkZvTGR0YWp2agp5OW1DVTVFZHB3VUY1RkZtOHk2a0FZWFpRYmhteElrQ0F3RUFBVEFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBCjJSYkpqYTNUSzBlRjRLUUw5T2hNTHVVYkFZNzc1WFBTT3VXMkVjR05XRUs1OXA1UG1VdjhzeWplcEUwM2dYZ0EKSkxINENQcE1POGt4VStmdCtwTjFaRmNwT1NmSnFuMkx6WU95eTBQVjVtM3NPWEpzRHVWUGRXWmN4VUZVWGtqYgp4QjU4NVZURTRiSU1nT1Vyc3I3eVoraHU0SFlzRFBzeXZNbHBHcDQrSDBBOU9HZmwwaXVGL1BjTG5keVdWV0NPCkI5Z3dYMUdlNEdGbms3cWJGdUplVWwwN3BoL3VnOE5xTTdVOC9HcG1uMlVrbFNtTlRhd09kQW9kR2VUSTlCaTUKQmNyaWpVVERhRVhlNHhvTTNTR3NIaFVUTUhOTk9XdzMyR0tzeGEyZU1YL0RrdXhWN1pTYktLdUQvU1RhWkdFNgpIcDFBY2thajl5eDE1YWYzL0hldnlnPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
+        rules:
+          - operations: [ "CREATE", "UPDATE" ]
+            apiGroups: ["*"]
+            apiVersions: ["*"]
+            resources: ["pods", "deployments", "replicationcontrollers", "replicasets", "daemonsets", "statefulsets", "jobs", "cronjobs"]
+        failurePolicy: Fail
+---
+# Source: portieris/templates/crd-creation/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: image-policy-crds
+  namespace: ibm-system
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+data:
+  custom-resource-definitions.yaml: |-
+    apiVersion: apiextensions.k8s.io/v1beta1
+    kind: CustomResourceDefinition
+    metadata:
+      name: imagepolicies.securityenforcement.admission.cloud.ibm.com
+      labels:
+        app: portieris
+    spec:
+      group: securityenforcement.admission.cloud.ibm.com
+      names:
+        kind: ImagePolicy
+        listKind: ImagePolicyList
+        plural: imagepolicies
+        singular: imagepolicy
+      scope: Namespaced
+      version: v1beta1
+    ---
+    apiVersion: apiextensions.k8s.io/v1beta1
+    kind: CustomResourceDefinition
+    metadata:
+      name: clusterimagepolicies.securityenforcement.admission.cloud.ibm.com
+      labels:
+        app: portieris
+    spec:
+      group: securityenforcement.admission.cloud.ibm.com
+      names:
+        kind: ClusterImagePolicy
+        listKind: ClusterImagePolicyList
+        plural: clusterimagepolicies
+        singular: clusterimagepolicy
+      scope: Cluster
+      version: v1beta1
+---
+# Source: portieris/templates/default/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default-image-policies
+  namespace: ibm-system
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+data:
+  default-custom-resources.yaml: |-
+    apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+    kind: ImagePolicy
+    metadata:
+      name: portieris-default-image-policy
+      namespace: ibm-system
+      annotations:
+        helm.sh/hook: post-install
+        helm.sh/hook-weight: "1"
+    spec:
+       repositories:
+        # This policy allows all images to be deployed into this namespace. This policy prevents breaking any existing third party applications in this namespace.
+        # IMPORTANT: Review this policy and replace it with one that meets your requirements. If you do not run any third party applications in this namespace, you can remove this policy entirely.
+        - name: "*"
+          policy:
+
+        # This policy prevents Portieris from blocking itself
+        - name: "docker.io/ibmcom/portieris:0.2.0"
+          policy:
+        # This policy allows Portieris to use Hyperkube to configure your cluster. This policy must exist if you uninstall Portieris.
+        - name: "quay.io/coreos/hyperkube:v1.7.6_coreos.0"
+          policies:
+
+    ---
+    apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+    kind: ImagePolicy
+    metadata:
+      name: portieris-default-image-policy
+      namespace: kube-system
+      annotations:
+        helm.sh/hook: post-install
+        helm.sh/hook-weight: "1"
+    spec:
+       repositories:
+        # This policy allows all images to be deployed into this namespace. This policy prevents breaking any existing third party applications in this namespace.
+        # IMPORTANT: Review this policy and replace it with one that meets your requirements. If you do not run any third party applications in this namespace, you can remove this policy entirely.
+        - name: "*"
+          policy:
+
+    ---
+    apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+    kind: ClusterImagePolicy
+    metadata:
+      name: portieris-default-cluster-image-policy
+      annotations:
+        helm.sh/hook: post-install
+        helm.sh/hook-weight: "1"
+    spec:
+       repositories:
+        # This enforces that all images deployed to this cluster pass trust
+        # IMPORTANT: Review this policy and replace it with one that meets your requirements.
+        - name: "*"
+          policy:
+            trust:
+              enabled: true
+---
+# Source: portieris/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+imagePullSecrets:
+- name: bluemix-default-secret
+- name: bluemix-default-secret-regional
+- name: bluemix-default-secret-international
+metadata:
+  name: portieris
+  namespace: ibm-system
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+---
+# Source: portieris/templates/clusterrole.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: portieris
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+rules:
+- apiGroups: ["securityenforcement.admission.cloud.ibm.com"]
+  resources: ["imagepolicies", "clusterimagepolicies"]
+  verbs: ["get", "watch", "list", "create"]
+- apiGroups: ["apiextensions.k8s.io"]
+  resources: ["customresourcedefinitions"]
+  verbs: ["get", "create", "delete"]
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources: ["validatingwebhookconfigurations", "mutatingwebhookconfigurations"]
+  verbs: ["get", "create", "delete"]
+- apiGroups: [""]
+  resources: ["secrets", "serviceaccounts"]
+  verbs: ["get"]
+---
+# Source: portieris/templates/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: admission-portieris-webhook
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: portieris
+subjects:
+  - kind: ServiceAccount
+    name: portieris
+    namespace: ibm-system
+---
+# Source: portieris/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: portieris
+  namespace: ibm-system
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    app: portieris
+    release: portieris
+---
+# Source: portieris/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portieris
+  namespace: ibm-system
+  labels:
+    app: portieris
+    chart: portieris-0.2.0
+    release: portieris
+    heritage: Tiller
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: portieris
+      release: portieris
+  template:
+    metadata:
+      labels:
+        app: portieris
+        release: portieris
+    spec:
+      serviceAccountName: portieris
+      containers:
+        - name: portieris
+          image: "docker.io/ibmcom/portieris:0.2.0"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+          resources:
+            {}
+ LAST DEPLOYED: Mon Jul 23 23:32:35 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/ServiceAccount
+NAME       SECRETS  AGE
+portieris  1        2m
+
+==> v1/ClusterRole
+NAME       AGE
+portieris  2m
+
+==> v1beta1/ClusterRoleBinding
+NAME                         AGE
+admission-portieris-webhook  2m
+
+==> v1/Service
+NAME       TYPE       CLUSTER-IP      EXTERNAL-IP  PORT(S)  AGE
+portieris  ClusterIP  10.101.194.144  <none>       443/TCP  2m
+
+==> v1/Deployment
+NAME       DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+portieris  3        3        3           3          2m
+
+==> v1/Pod(related)
+NAME                        READY  STATUS   RESTARTS  AGE
+portieris-7b7cbf58c5-gmpwm  1/1    Running  0         2m
+portieris-7b7cbf58c5-r5vvv  1/1    Running  0         2m
+portieris-7b7cbf58c5-vkhkh  1/1    Running  0         2m
+
+==> v1/ConfigMap
+NAME                    DATA  AGE
+admission-webhooks      1     2m
+image-policy-crds       1     2m
+default-image-policies  1     2m
+
+
+NOTES:
+Portieris is installed in your cluster.
+
+Default security policies are installed in your cluster. You can modify the default policies or replace them with your own. For more information, see http://ibm.biz/cise_default.
+
+You can apply access control policies to limit who can modify Image Security Enforcement policies in your cluster. See http://ibm.biz/cise_assign.
+

@@ -1,0 +1,9 @@
+kind: cluster
+metadata:
+  namespace: system
+  name: cluster-us-east
+type: kubernetes
+config:
+  namespace: east
+  local: true
+

@@ -1,0 +1,9 @@
+kind: cluster
+metadata:
+  namespace: system
+  name: cluster-us-west
+type: kubernetes
+config:
+  namespace: west
+  local: true
+
